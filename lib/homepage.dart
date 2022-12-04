@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:the_real_downloader/download_youtube.dart';
 import 'package:the_real_downloader/instagram.dart';
 import 'package:the_real_downloader/twitter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   //hide android navigation bar
@@ -15,15 +16,27 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final tabs = [
-    // ignore: prefer_const_constructors
-    Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: const Center(
-        child: Text(
-            'No Ads, \nNo Watermarks, \nNo Bullshit, \n\nJust Download!',
-            style: TextStyle(
-                color: Colors.white, fontSize: 40, fontFamily: 'Commissioner')),
-      ),
+     Column(
+      children:  [
+        const Spacer(),
+           RichText(
+            text: const TextSpan( text:
+              'No Ads, \nNo Watermarks, \nNo BS, \n\nJust',
+              style: TextStyle(
+                  color: Colors.white, fontSize: 26, fontFamily: 'Commissioner'),
+              children: [
+                TextSpan(
+                  text: ' Download!',
+                  style: TextStyle(
+                      color: Colors.greenAccent,
+                      fontSize: 26,
+                      fontFamily: 'Commissioner'),
+                ),
+              ]),
+          ),
+         const Spacer(),
+         Image.asset('./assets/images/2.png'),
+        ],
     ),
     const Center(child: DownloadYoutube()),
     const Center(child: Instagram()),
@@ -36,12 +49,14 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.black,
 
       appBar: AppBar(
-        toolbarHeight: 150,
+        toolbarHeight: 100,
         backgroundColor: Colors.black,
+        //align title to center
+
 
 
         title: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 100),
+          padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 20),
           child: Text('The real downloader',
               style: TextStyle(
                   letterSpacing: 1,
@@ -51,7 +66,8 @@ class _HomePageState extends State<HomePage> {
                   fontFamily: 'Commissioner')),
         ),
       ),
-      body: Container(
+      body:
+      Container(
         child: tabs[_currentIndex],
       ),
       bottomNavigationBar: Container(
@@ -68,9 +84,9 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
-              GButton(icon: Icons.personal_video, text: 'Youtube'),
-              GButton(icon: Icons.favorite_border, text: 'Instagram'),
-              GButton(icon: Icons.stay_primary_portrait, text: 'Twitter'),
+              GButton(icon: FontAwesomeIcons.youtube, text: 'Youtube'),
+              GButton(icon: FontAwesomeIcons.instagram, text: 'Instagram'),
+              GButton(icon: FontAwesomeIcons.twitter, text: 'Twitter'),
             ],
             onTabChange: (index) {
               setState(() {
