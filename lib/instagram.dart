@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+
 class Instagram extends StatefulWidget {
   const Instagram({Key? key}) : super(key: key);
 
@@ -10,8 +12,17 @@ class Instagram extends StatefulWidget {
 class _InstagramState extends State<Instagram> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: const Text('This is Instagram page'),
+    return Column(
+      children:  [
+        Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Text('Instagram', style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

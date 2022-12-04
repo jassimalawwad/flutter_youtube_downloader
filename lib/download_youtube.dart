@@ -29,13 +29,13 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
-
                 style: const TextStyle(
+
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
@@ -45,8 +45,8 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
                     getVideoInfo(val);
                   });
                 },
-
                 decoration:  InputDecoration(
+
                   filled: true,
                   fillColor:  Colors.grey.shade900,
                   enabledBorder:  OutlineInputBorder(
@@ -63,24 +63,24 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
                     borderSide: BorderSide(color: Colors.grey.shade900, width: 1.0),
                     borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   ),
-hintText: 'Enter the URL',
+                  hintText: 'Paste YouTube video URL',
                   hintStyle: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+                      color: Colors.grey,
+                      fontSize: 16,
+                      ),
                 ),
               ),
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+                  const EdgeInsets.symmetric(horizontal: 20.0),
               //get image from url only if the url is not empty
               child: videoThumbnail != ''
                   ? Image.network(videoThumbnail)
                   : const SizedBox(),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
                 textAlign: TextAlign.center,
                 videoTitle,
@@ -98,7 +98,7 @@ hintText: 'Enter the URL',
                     fontWeight: FontWeight.bold)),
             Padding(
 
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TextButton(
                 style: TextButton.styleFrom(
                   minimumSize: const Size(150, 50),
@@ -116,7 +116,7 @@ hintText: 'Enter the URL',
             ),
             _downloading
                 ? Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                     child: LinearProgressIndicator(
                       minHeight: 20,
                       value: progress,
