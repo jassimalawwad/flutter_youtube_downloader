@@ -6,7 +6,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 class DownloadYoutube extends StatefulWidget {
   const DownloadYoutube({super.key});
 
@@ -29,13 +28,11 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Column(
-
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 style: const TextStyle(
-
                     color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
@@ -45,35 +42,34 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
                     getVideoInfo(val);
                   });
                 },
-                decoration:  InputDecoration(
-
+                decoration: InputDecoration(
                   filled: true,
-                  fillColor:  Colors.grey.shade900,
-                  enabledBorder:  OutlineInputBorder(
-
-                    borderSide: BorderSide(color: Colors.grey.shade900, width: 1.0),
-
+                  fillColor: Colors.grey.shade900,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.grey.shade900, width: 1.0),
                     borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   ),
-                  border:  OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.shade900, width: 1.0),
+                  border: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.grey.shade900, width: 1.0),
                     borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   ),
-                  focusedBorder:  OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.shade900, width: 1.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.grey.shade900, width: 1.0),
                     borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                   ),
                   hintText: 'Paste YouTube video URL',
                   hintStyle: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                      ),
+                    color: Colors.grey,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               //get image from url only if the url is not empty
               child: videoThumbnail != ''
                   ? Image.network(videoThumbnail)
@@ -97,7 +93,6 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
                     fontSize: 20,
                     fontWeight: FontWeight.bold)),
             Padding(
-
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TextButton(
                 style: TextButton.styleFrom(
@@ -116,7 +111,8 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
             ),
             _downloading
                 ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 10),
                     child: LinearProgressIndicator(
                       minHeight: 20,
                       value: progress,
@@ -132,21 +128,20 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
     );
   }
 
-
   Future<String?> getDownloadPath() async {
     Directory? directory;
     try {
       if (Platform.isAndroid) {
         directory = Directory('/storage/emulated/0/Download');
-      }
-      else {
+      } else {
         directory = await getApplicationDocumentsDirectory();
       }
-} catch (e) {
+    } catch (e) {
       print(e);
     }
     return directory?.path;
   }
+
   //functions
   Future<void> getVideoInfo(url) async {
     var youtubeInfo = YoutubeExplode();
@@ -160,66 +155,65 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
   }
 
   Future<void> downloadVideo(id) async {
-  var permission = await Permission.storage.request();
-  if (permission.isGranted) {
-    //download the video
-    if (_urlTextFiledController.text !='') {
-
-      setState(()=> _downloading = true) ;
-      var youtubeExplode = YoutubeExplode();
-      //get the video metadata
-      var video = await youtubeExplode.videos.get(id);
-      var manifest = await youtubeExplode.videos.streamsClient.getManifest(id);
-      var streams = manifest.muxed.withHighestBitrate();
-      var audio = streams;
-      var audioStream = youtubeExplode.videos.streamsClient.get(audio);
-
-      //get the app directory
-
-
-      var downloadPath = await getDownloadPath();
-      var file = File('$downloadPath/${video.id}.mp4');
-      //if file exists create a new file
-      if (await file.exists()) {
-        file = File('$downloadPath/${video.id}1.mp4');
-      }
-
+    var permission = await Permission.storage.request();
+    if (permission.isGranted) {
       //download the video
-      var output = file.openWrite(mode: FileMode.writeOnlyAppend);
-      var size = audio.size.totalBytes;
-      var count = 0;
+      if (_urlTextFiledController.text != '') {
+        setState(() => _downloading = true);
+        var youtubeExplode = YoutubeExplode();
+        //get the video metadata
+        var video = await youtubeExplode.videos.get(id);
+        var manifest =
+            await youtubeExplode.videos.streamsClient.getManifest(id);
+        var streams = manifest.muxed.withHighestBitrate();
+        var audio = streams;
+        var audioStream = youtubeExplode.videos.streamsClient.get(audio);
 
-      await for (final data in audioStream) {
-        //keep track of the download progress
-        count += data.length;
-        double val = ((count / size));
-        var msg = '${video.title} Downloaded to $downloadPath';
-        for (val; val == 1.0; val++) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+        //get the app directory
+
+        var downloadPath = await getDownloadPath();
+        var file = File('$downloadPath/${video.id}.mp4');
+        //if file exists create a new file
+        if (await file.exists()) {
+          file = File('$downloadPath/${video.id}1.mp4');
         }
+
+        //download the video
+        var output = file.openWrite(mode: FileMode.writeOnlyAppend);
+        var size = audio.size.totalBytes;
+        var count = 0;
+
+        await for (final data in audioStream) {
+          //keep track of the download progress
+          count += data.length;
+          double val = ((count / size));
+          var msg = '${video.title} Downloaded to $downloadPath';
+          for (val; val == 1.0; val++) {
+            // ignore: use_build_context_synchronously
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(msg)));
+          }
+          setState(() {
+            progress = val;
+            // Write the data to the file
+            output.add(data);
+          });
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text(
+          'Please enter the url',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        )));
         setState(() {
-          progress = val;
-          // Write the data to the file
-          output.add(data);
+          _downloading = false;
         });
       }
+    } else {
+      await Permission.storage.request();
     }
-    else{
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter the url',
-      style: TextStyle(
-
-        color: Colors.white,
-        fontSize: 16,
-
-      ),)));
-      setState(() {
-        _downloading = false;
-      });
-    }
-
-  }
-  else {
-    await Permission.storage.request();
-  }
   }
 }

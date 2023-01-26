@@ -47,13 +47,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-
       appBar: AppBar(
         toolbarHeight: 100,
         backgroundColor: Colors.black,
         //align title to center
-
-
 
         title: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 20),
@@ -66,8 +63,7 @@ class _HomePageState extends State<HomePage> {
                   fontFamily: 'Commissioner')),
         ),
       ),
-      body:
-      Container(
+      body: Container(
         child: tabs[_currentIndex],
       ),
       bottomNavigationBar: Container(
