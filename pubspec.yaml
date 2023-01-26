@@ -47,6 +47,9 @@ dependencies:
   image_gallery_saver: ^1.7.1
   font_awesome_flutter: ^10.3.0
   flutter_insta: ^1.0.1
+  flutter_downloader: ^1.9.1
+  avatar_glow: ^2.0.2
+  percent_indicator: ^4.2.2
 
 
 dev_dependencies:

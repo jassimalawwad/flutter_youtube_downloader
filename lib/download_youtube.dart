@@ -1,10 +1,12 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously, duplicate_ignore
 
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:avatar_glow/avatar_glow.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 class DownloadYoutube extends StatefulWidget {
   const DownloadYoutube({super.key});
@@ -21,108 +23,137 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
   String videoChannelName = '';
   bool _downloading = false;
   double progress = 0;
+  String downloadText = "Download";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: TextField(
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-                controller: _urlTextFiledController,
-                onChanged: (val) {
-                  setState(() {
-                    getVideoInfo(val);
-                  });
-                },
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.grey.shade900,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade900, width: 1.0),
-                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade900, width: 1.0),
-                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade900, width: 1.0),
-                    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                  ),
-                  hintText: 'Paste YouTube video URL',
-                  hintStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              //get image from url only if the url is not empty
-              child: videoThumbnail != ''
-                  ? Image.network(videoThumbnail)
-                  : const SizedBox(),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                textAlign: TextAlign.center,
-                videoTitle,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Text(videoChannelName,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold)),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  minimumSize: const Size(150, 50),
-                  backgroundColor: Colors.grey.shade800,
-                ),
-                onPressed: () {
-                  downloadVideo(_urlTextFiledController.text);
-                },
-                child: const Text('Download',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
-              ),
-            ),
-            _downloading
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 10),
-                    child: LinearProgressIndicator(
-                      minHeight: 20,
-                      value: progress,
-                      backgroundColor: Colors.grey.shade800,
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                          Colors.greenAccent),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              //align text to left
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: TextField(
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                  controller: _urlTextFiledController,
+                  onChanged: (val) {
+                    setState(() {
+                      getVideoInfo(val);
+                    });
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.grey.shade900,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.grey.shade900, width: 1.0),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
                     ),
-                  )
-                : Container(),
-          ],
+                    border: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.grey.shade900, width: 1.0),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.grey.shade900, width: 1.0),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(8.0)),
+                    ),
+                    hintText: 'Paste YouTube video URL here',
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                //get image from url only if the url is not empty
+                child: videoThumbnail != ''
+                    ? Image.network(videoThumbnail)
+                    : const SizedBox(),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  videoChannelName,
+                  style: const TextStyle(
+                      color: Colors.greenAccent,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Text(videoTitle,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.grey.shade400,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: AvatarGlow(
+                    glowColor: Colors.greenAccent,
+                    endRadius: 120,
+                    duration: const Duration(milliseconds: 3000),
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        shape: const CircleBorder(),
+                        minimumSize: const Size(150, 150),
+                        backgroundColor: Colors.greenAccent,
+                      ),
+                      onPressed: () {
+                        downloadVideo(_urlTextFiledController.text);
+                      },
+                      child: Text(downloadText,
+                          style: TextStyle(
+                              color: Colors.grey.shade800,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold)),
+                    )),
+              ),
+              _downloading
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25.0, vertical: 10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Stack(children: <Widget>[
+                          SizedBox(
+                            child: LinearProgressIndicator(
+                              minHeight: 25,
+                              value: progress,
+                              backgroundColor: Colors.grey.shade800,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                  Colors.greenAccent),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                                '${(progress * 100).toStringAsFixed(0)}%',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                        ]),
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
+          ),
         ),
       ),
     );
@@ -187,17 +218,18 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
           //keep track of the download progress
           count += data.length;
           double val = ((count / size));
-          var msg = '${video.title} Downloaded to $downloadPath';
-          for (val; val == 1.0; val++) {
-            // ignore: use_build_context_synchronously
+          if (val <= 1.0) {
+            setState(() {
+              progress = val.clamp(0.0, 1.0);
+            });
+          }
+          if (val == 1.0) {
+            var msg = '${video.title} Downloaded to $downloadPath';
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(msg)));
           }
-          setState(() {
-            progress = val;
-            // Write the data to the file
-            output.add(data);
-          });
+          // Write the data to the file
+          output.add(data);
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

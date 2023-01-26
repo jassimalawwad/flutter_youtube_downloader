@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:the_real_downloader/download_youtube.dart';
-import 'package:the_real_downloader/instagram.dart';
-import 'package:the_real_downloader/twitter.dart';
+import 'package:the_real_downloader/myfiles.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,31 +16,33 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final tabs = [
-     Column(
-      children:  [
-        const Spacer(),
-           RichText(
-            text: const TextSpan( text:
-              'No Ads, \nNo Watermarks, \nNo BS, \n\nJust',
-              style: TextStyle(
-                  color: Colors.white, fontSize: 26, fontFamily: 'Commissioner'),
-              children: [
-                TextSpan(
-                  text: ' Download!',
-                  style: TextStyle(
-                      color: Colors.greenAccent,
-                      fontSize: 26,
-                      fontFamily: 'Commissioner'),
-                ),
-              ]),
+    Center(
+      child: Column(
+        children: [
+          const Spacer(),
+          RichText(
+            text: const TextSpan(
+                text: 'No Ads, \nNo Watermarks, \nJust',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 26,
+                    fontFamily: 'Commissioner'),
+                children: [
+                  TextSpan(
+                    text: ' Download!',
+                    style: TextStyle(
+                        color: Colors.greenAccent,
+                        fontSize: 26,
+                        fontFamily: 'Commissioner'),
+                  ),
+                ]),
           ),
-         const Spacer(),
-         Image.asset('./assets/images/2.png'),
+          const Spacer(),
         ],
+      ),
     ),
     const Center(child: DownloadYoutube()),
-    const Center(child: Instagram()),
-    const Center(child: Twitter())
+    const Center(child: Myflies()),
   ];
 
   @override
@@ -81,8 +83,7 @@ class _HomePageState extends State<HomePage> {
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
               GButton(icon: FontAwesomeIcons.youtube, text: 'Youtube'),
-              GButton(icon: FontAwesomeIcons.instagram, text: 'Instagram'),
-              GButton(icon: FontAwesomeIcons.twitter, text: 'Twitter'),
+              GButton(icon: FontAwesomeIcons.download, text: 'My Files'),
             ],
             onTabChange: (index) {
               setState(() {
