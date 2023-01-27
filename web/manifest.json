@@ -1,6 +1,6 @@
 {
-    "name": "the_real_downloader",
-    "short_name": "the_real_downloader",
+    "name": "youtube_downloader",
+    "short_name": "youtube_downloader",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

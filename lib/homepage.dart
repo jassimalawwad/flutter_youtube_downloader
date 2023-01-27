@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:the_real_downloader/download_youtube.dart';
-import 'package:the_real_downloader/myfiles.dart';
+import 'download_youtube.dart';
+import 'myfiles.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
 
         title: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 20),
-          child: Text('The real downloader',
+          child: Text('Youtube downloader',
               style: TextStyle(
                   letterSpacing: 1,
                   color: Colors.greenAccent,

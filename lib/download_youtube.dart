@@ -129,26 +129,29 @@ class _DownloadYoutubeState extends State<DownloadYoutube> {
                           horizontal: 25.0, vertical: 10),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: Stack(children: <Widget>[
-                          SizedBox(
-                            child: LinearProgressIndicator(
-                              minHeight: 25,
-                              value: progress,
-                              backgroundColor: Colors.grey.shade800,
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Colors.greenAccent),
-                            ),
-                          ),
-                          Align(
+                        child: Stack(
                             alignment: Alignment.center,
-                            child: Text(
-                                '${(progress * 100).toStringAsFixed(0)}%',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                        ]),
+                            children: <Widget>[
+                              SizedBox(
+                                child: LinearProgressIndicator(
+                                  minHeight: 25,
+                                  value: progress,
+                                  backgroundColor: Colors.grey.shade800,
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                          Colors.greenAccent),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Text(
+                                    '${(progress * 100).toStringAsFixed(0)}%',
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ]),
                       ),
                     )
                   : const SizedBox(),
